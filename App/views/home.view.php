@@ -1,4 +1,6 @@
-<?php loadPartial("head")?>
+<?php loadPartial("head", [
+    'title' => 'Welcome page'
+])?>
 <main>
     <h1>Welcome!</h1>
     <?php loadPartial("json-code", [
