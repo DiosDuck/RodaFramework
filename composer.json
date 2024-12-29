@@ -1,0 +1,14 @@
+{
+    "description": "Creating a framework from 0",
+    "authors": [
+        {
+            "name": "DiosDuck"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Framework\\": "Framework/",
+            "App\\": "App/"
+        }
+    }
+}
