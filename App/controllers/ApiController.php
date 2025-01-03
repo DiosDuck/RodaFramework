@@ -9,7 +9,6 @@ class ApiController extends AbstractController
     public function welcome()
     {
         sleep(4);
-        throw new \Exception('Test error');
         $this->sendJsonResponse([
             'success' => true,
             'message' => 'Welcome to the API'
