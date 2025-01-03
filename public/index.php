@@ -5,6 +5,7 @@ require __DIR__ . '/../helpers.php';
 use App\Controllers\ErrorController;
 use Framework\Session;
 use Framework\Router;
+use Framework\Logger;
 
 Session::start();
 $router = new Router();
@@ -15,4 +16,5 @@ try {
     $router->route($uri);
 } catch (Exception $e) {
     ErrorController::internalServerError();
+    Logger::exceptionLog($e);
 }

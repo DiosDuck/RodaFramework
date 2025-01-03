@@ -101,5 +101,6 @@ class Router {
             }
         }
         ErrorController::notFound();
+        Logger::log("Route '$uri' not found", Logger::WARNING_LOG);
     }
 }
