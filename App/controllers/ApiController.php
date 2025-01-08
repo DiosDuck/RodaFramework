@@ -10,7 +10,7 @@ class ApiController extends AbstractController
     {
         sleep(4);
         $this->sendJsonResponse([
-            'success' => true,
+            'success' => true ,
             'message' => 'Welcome to the API'
         ]);
     }
