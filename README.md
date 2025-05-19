@@ -29,13 +29,13 @@ Routes are registered into `routes.php`, by explicitally telling method, URI, co
 ```
 $router->method('/uri', 'Controller@action');
 ```
-Controller must be from `App\\Controllers` namespace and be placed into `App\controllers` folder, respecting PSR-4 rule.
+Controller must be from `App\\Controllers` namespace and be placed into `App\src\controllers` folder, respecting PSR-4 rule.
 
-For sending parameters throw URI, encapsulate the parameter within **{}** with the parameter name. For content body and query parameters they can be extracted throw extention of `Framework\\AbstractController.php`
+For sending parameters throw URI, encapsulate the parameter within **{}** with the parameter name. For content body and query parameters they can be extracted throw extention of `Framework\\Controllers\\AbstractController.php`
 ```
 $router->method('/uri/{parameter_name}/details', 'Controller@action');
 ```
-For rendering the page, it is used views and partials. Views represents the main page which are being called throw controller's actions. It can be called throw method `renderView()` if `Framework\\AbstractController.php` is extended or `loadView()` otherwise.
+For rendering the page, it is used views and partials. Views represents the main page which are being called throw controller's actions. It can be called throw method `renderView()` if `Framework\\Controllers\\AbstractViewController.php` is extended or `loadView()` otherwise.
 ```
 $this->renderView('view_name', ['parameter1' => value1, 'parameter2' => value2]);
 ```
