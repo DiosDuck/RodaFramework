@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use Framework\AbstractController;
+use Framework\Controllers\AbstractViewController;
 
-class ErrorController extends AbstractController
+class ErrorController extends AbstractViewController
 {
     public static function notFound()
     {

@@ -3,6 +3,7 @@
 namespace Framework;
 
 use App\Controllers\ErrorController;
+use Framework\Controllers\AbstractController;
 
 class Router {
     protected $routes = [];
@@ -94,7 +95,10 @@ class Router {
                     $controller = 'App\\Controllers\\' . $route['controller'];
                     $controllerMethod = $route['controllerMethod'];
 
-                    $controllerInstance = new $controller($_GET, file_get_contents('php://input'));
+                    /** @var AbstractController $controllerInstance */
+                    $controllerInstance = new $controller();
+                    $controllerInstance->setQuery($_GET);
+                    $controllerInstance->setRawBody(file_get_contents('php://input'));
                     $controllerInstance->$controllerMethod($params);
                     return;
                 }

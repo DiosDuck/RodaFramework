@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use Framework\AbstractController;
+use Framework\Controllers\AbstractViewController;
 
-class HomeController extends AbstractController {
+class HomeController extends AbstractViewController {
     public function index()
     {
         $this->renderView('home');
