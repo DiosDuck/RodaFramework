@@ -5,7 +5,7 @@
  */
 function basePath(string $path = ''): string
 {
-return __DIR__ . '/' . $path;
+   return __DIR__ . '/' . $path;
 }
 
 /**
@@ -13,14 +13,14 @@ return __DIR__ . '/' . $path;
  */
 function loadView(string $name, array $data = []): void
 {
-$viewPath = basePath("App/views/{$name}.view.php");
+   $viewPath = basePath("App/views/{$name}.view.php");
 
-if (file_exists($viewPath)) {
-   extract($data);
-   require $viewPath;
-} else {
-   echo "View '{$name}' not found!";
-}
+   if (file_exists($viewPath)) {
+      extract($data);
+      require $viewPath;
+   } else {
+      echo "View '{$name}' not found!";
+   }
 }
 
 /**
@@ -28,14 +28,14 @@ if (file_exists($viewPath)) {
  */
 function loadPartial(string $name, array $data = []): void
 {
-$partialPath = basePath("App/views/partials/{$name}.php");
+   $partialPath = basePath("App/views/partials/{$name}.php");
 
-if (file_exists($partialPath)) {
-   extract($data);
-   require $partialPath;
-} else {
-   echo "Partial '{$name}' not found!";
-}
+   if (file_exists($partialPath)) {
+      extract($data);
+      require $partialPath;
+   } else {
+      echo "Partial '{$name}' not found!";
+   }
 }
 
 /**
@@ -43,20 +43,20 @@ if (file_exists($partialPath)) {
  */
 function inspect(mixed $value): void 
 {
-echo '<pre>';
-var_dump($value);
-echo '</pre>';
+   echo '<pre>';
+   var_dump($value);
+   echo '</pre>';
 }
 
 /**
  * Inspect a value(s) and die
-*/
+ */
 function inspectAndDie(mixed $value): void 
 {
-echo '<pre>';
-var_dump($value);
-echo '</pre>';
-die();
+   echo '<pre>';
+   var_dump($value);
+   echo '</pre>';
+   die();
 }
 
 /**
@@ -64,25 +64,25 @@ die();
 */
 function sanitize(string $dirty): string 
 {
-return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
+   return filter_var(trim($dirty), FILTER_SANITIZE_SPECIAL_CHARS);
 }
 
 /**
  * Redirect to a give url
-   */
+ */
 function redirect(string $url): void 
 {
-header("Location: $url");
-exit;
+   header("Location: $url");
+   exit;
 }
 
 /**
  * Converts the data into JSON body and sends it
-   */
+ */
 function sendJson(array $data, int $code = 200): void 
 {
-header('Content-Type: application/json; charset=utf-8');
-http_response_code($code);
-echo json_encode($data);
-exit;
+   header('Content-Type: application/json; charset=utf-8');
+   http_response_code($code);
+   echo json_encode($data);
+   exit;
 }
