@@ -92,15 +92,31 @@ class Router {
                 }
 
                 if ($match) {
-                    $controller = 'App\\Controllers\\' . $route['controller'];
-                    $controllerMethod = $route['controllerMethod'];
+                    try {
+                        $controller = 'App\\Controllers\\' . $route['controller'];
+                        if (!class_exists($controller)) {
+                            throw new \Exception("Class $controller does not exist!");
+                        }
 
-                    /** @var AbstractController $controllerInstance */
-                    $controllerInstance = new $controller();
-                    $controllerInstance->setQuery($_GET);
-                    $controllerInstance->setRawBody(file_get_contents('php://input'));
-                    $controllerInstance->$controllerMethod($params);
-                    return;
+                        $controllerInstance = new $controller();
+                        if (!$controllerInstance instanceof AbstractController) {
+                            throw new \Exception("Class $controller does not inherit " . AbstractController::class);
+                        }
+
+                        $controllerMethod = $route['controllerMethod'];
+                        if (!method_exists($controllerInstance, $controllerMethod)) {
+                            throw new \Exception("Class $controller does not contain method with name $controllerMethod");
+                        }
+
+                        $controllerInstance->setQuery($_GET);
+                        $controllerInstance->setRawBody(file_get_contents('php://input'));
+                        $controllerInstance->$controllerMethod($params);
+                    } catch (\Exception $e) {
+                        Logger::exceptionLog($e);
+                        ErrorController::internalServerError();
+                    } finally {
+                        return;
+                    }
                 }
             }
         }
