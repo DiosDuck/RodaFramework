@@ -29,7 +29,7 @@ Routes are registered into `routes.php`, by explicitally telling method, URI, co
 ```
 $router->method('/uri', 'Controller@action');
 ```
-Controller must be from `App\\Controllers` namespace, being placed into `App\src\controllers` folder respecting PSR-4 rule, and be instance of `Framework\\Controllers\\AbstractController.php`.
+Controller must be from `App\\Controllers` namespace, being placed into `App\src\Controllers` folder respecting PSR-4 rule, and be instance of `Framework\\Controllers\\AbstractController.php`.
 
 For sending parameters throw URI, encapsulate the parameter within **{}** with the parameter name. For content body and query parameters they can be extracted throw extention of `Framework\\Controllers\\AbstractController.php`
 ```
