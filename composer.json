@@ -1,8 +1,11 @@
 {
+    "name": "roda/framework",
     "description": "Creating a framework from 0",
+    "type": "project",
+    "license": "MIT",
     "authors": [
         {
-            "name": "DiosDuck"
+            "name": "Tapuc 'Roda' Mihai-Ovidiu"
         }
     ],
     "autoload": {

@@ -45,6 +45,12 @@ Views respect the following path `App\views\controller\view_name.view.php`, part
 
 `loadPartial()` is a much more simpler method, requesting partial's name and data to render the partial. In exchange it renders the specific part of the code. They are used in views and template files to render specific parts of the code to avoid repetition.
 
+## License
+
+This project is licensed under the [MIT License](LICENSE). You are free to use, modify, and distribute it for any purpose — including commercial use — as long as you include the original license and copyright notice.
+
+You cannot claim ownership of the original work, but you may use it in open-source or personal projects freely.
+
 ## Wishes
 
-There could be more missing parts throw this documentation, however I suggest following the course and play around with the code to see for yourself. Have fun :)
+There could be more missing parts through this documentation, however I suggest following the course and play around with the code to see for yourself. Have fun :)
