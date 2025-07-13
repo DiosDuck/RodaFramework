@@ -4,12 +4,38 @@ namespace Framework\Controllers;
 
 abstract class AbstractViewController extends AbstractController
 {
+    private const TITLE = 'title';
+    private array $heads = [];
+
+    /**
+     * Set the title of the page
+     */
+    protected function setTItle(string $title): void
+    {
+        $this->heads[self::TITLE] = $title;
+    }
+
+    /**
+     * Add a header line
+     */
+    protected function addHeader(string $header): void
+    {
+        array_push($this->heads, $header);
+    }
+
     /**
      * render view elements
      */
-    public function renderView(string $name, array $data = []): void
+    protected function renderView(string $name, array $data = [], string $base = 'base'): void
     {
-        loadView($name, $data);
+        // set default title if not set
+        if (!isset($this->heads[self::TITLE])) {
+            $list = explode('\\', get_class($this));
+            $title = end($list);
+            $this->setTItle($title);
+        }
+
+        render($name, array_merge($data, ['heads' => $this->heads]), $base);
     }
 
     /**

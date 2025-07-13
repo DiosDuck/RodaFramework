@@ -35,13 +35,15 @@ For sending parameters throw URI, encapsulate the parameter within **{}** with t
 ```
 $router->method('/uri/{parameter_name}/details', 'Controller@action');
 ```
-For rendering the page, it is used views and partials. Views represents the main page which are being called throw controller's actions. It can be called throw method `renderView()` if `Framework\\Controllers\\AbstractViewController.php` is extended or `loadView()` otherwise.
+For rendering the page, it is used views and partials. Views represents the main page which are being called throw controller's actions. It can be called throw method `renderView()` if `Framework\\Controllers\\AbstractViewController.php` is extended or `render()` otherwise.
 ```
 $this->renderView('view_name', ['parameter1' => value1, 'parameter2' => value2]);
 ```
-Views respect the following path `App\views\view_name.view.php`, while partials respect the following path `App\views\partials\partial_name.php`. Both `loadView()` and `loadPartial()` have the same parameters: file name (not the entire path, just the name to respect the rule above) and an array of parameters.
+Views respect the following path `App\views\controller\view_name.view.php`, partials respect the following path `App\views\partials\partial_name.php` and base templates respect the following path `App\views\base.view.php`.
 
-Partias are used in view files to render specific parts of the code to avoid repetition.
+`render()` has the following parameters: view which represents the view name, including the controller's name (in this example would be `home\index`), data which are the view data used for rendering, and base template which represents the body of it. Base uses something similar to Twig's template, where we create a basit template for the website, then add the extra content on it depending of the page.
+
+`loadPartial()` is a much more simpler method, requesting partial's name and data to render the partial. In exchange it renders the specific part of the code. They are used in views and template files to render specific parts of the code to avoid repetition.
 
 ## Wishes
 

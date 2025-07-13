@@ -8,11 +8,13 @@ class ErrorController extends AbstractViewController
 {
     public static function notFound()
     {
-        loadView('errors/404');
+        setResponseCode(404);
+        render('errors/404', ['heads' => ['title' => 'Not Found']]);
     }
 
     public static function internalServerError()
     {
-        loadView('errors/500');
+        setResponseCode(500);
+        render('errors/500', ['heads' => ['title' => 'Internal Server Error']]);
     }
 }
