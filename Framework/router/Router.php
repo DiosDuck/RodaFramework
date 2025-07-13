@@ -5,7 +5,8 @@ namespace Framework\Router;
 use App\Controllers\ErrorController;
 use Framework\Controllers\AbstractController;
 use Framework\Exceptions\RouteException;
-use Framework\Logger;
+use Framework\Logger\LogService;
+use Framework\Logger\LogType;
 
 class Router {
     /** @var Route[] $routes */
@@ -49,6 +50,7 @@ class Router {
     public function route(string $uri): void 
     {
         $requestMethod = $this->getRequestMethodName();
+        $logService = LogService::getLogger();
 
         foreach($this->routes as $route) {
             $params = $this->isRouteMatched($route, $uri, $requestMethod);
@@ -57,7 +59,7 @@ class Router {
                 try {
                     $this->callMethod($route, $params);
                 } catch (\Exception $e) {
-                    Logger::exceptionLog($e);
+                    $logService->exceptionLog($e);
                     ErrorController::internalServerError();
                 } finally {
                     return;
@@ -65,7 +67,7 @@ class Router {
             }
         }
         ErrorController::notFound();
-        Logger::log("Route '$uri' not found", Logger::WARNING_LOG);
+        $logService->log("Route '$uri' not found", LogType::WARNING);
     }
 
     /**
@@ -107,7 +109,6 @@ class Router {
     {
         $uriSegmnets = explode('/', trim($requestUri, '/'));
         $routeSegmnets = explode('/', trim($route->getUri(), '/'));
-        $match = false;
 
         if (
             count($uriSegmnets) !== count($routeSegmnets) || 

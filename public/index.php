@@ -4,7 +4,7 @@ require __DIR__ . '/../helpers.php';
 
 use App\Controllers\ErrorController;
 use Framework\Session;
-use Framework\Logger;
+use Framework\Logger\LogService;
 
 Session::start();
 $router = require basePath('routes.php');
@@ -14,5 +14,5 @@ try {
     $router->route($uri);
 } catch (Exception $e) {
     ErrorController::internalServerError();
-    Logger::exceptionLog($e);
+    LogService::getLogger()->exceptionLog($e);
 }
