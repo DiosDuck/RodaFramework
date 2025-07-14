@@ -2,9 +2,9 @@
 
 namespace Framework\Logger;
 
-use Framework\ConfigReader\ConfigReader;
+use Framework\ConfigReader\PHPConfigReader;
 
-class LogService {
+class LogService implements ILogService {
     private readonly string $path;
     private static LogService $instance;
 
@@ -18,7 +18,7 @@ class LogService {
     }
 
     private function __construct() {
-        $data = ConfigReader::getLoggerPHPFile();
+        $data = PHPConfigReader::getLoggerFile();
         if (!$data) {
             $this->path = '../../log.txt';
         } else {

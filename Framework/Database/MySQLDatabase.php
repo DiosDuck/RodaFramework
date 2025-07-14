@@ -5,13 +5,13 @@ namespace Framework\Database;
 use PDO;
 use PDOException;
 use Exception;
-use Framework\ConfigReader\ConfigReader;
+use Framework\ConfigReader\PHPConfigReader;
 
 class MySQLDatabase extends AbstractDatabase {
 
     public function __construct()
     {
-        $config = ConfigReader::getDatabasePHPFile();
+        $config = PHPConfigReader::getDatabaseFile();
 
         $dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['dbname']}";
 
