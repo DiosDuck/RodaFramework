@@ -3,7 +3,7 @@
     <?php loadPartial("json-code", [
         'id' => 'welcome-api',
         'description' => 'Welcome to the API',
-        'url' => '/api/welcome',
+        'url' => '/api/welcome/Roda',
         'method' => 'GET',
         'body' => '{}'
     ])?>

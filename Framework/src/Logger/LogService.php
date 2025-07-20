@@ -2,23 +2,23 @@
 
 namespace Framework\Logger;
 
-use Framework\ConfigReader\PHPConfigReader;
+use Framework\ConfigReader\IConfigReader;
 
 class LogService implements ILogService {
     private readonly string $path;
     private static LogService $instance;
 
-    public static function getLogger(): LogService
+    public static function getLogger(IConfigReader $configReader): LogService
     {
         if (!isset(self::$instance)) {
-            self::$instance = new self();
+            self::$instance = new self($configReader);
         }
 
         return self::$instance;
     }
 
-    private function __construct() {
-        $data = PHPConfigReader::getLoggerFile();
+    private function __construct(IConfigReader $configReader) {
+        $data = $configReader->getLoggerFile();
         if (!$data) {
             $this->path = '../../log.txt';
         } else {

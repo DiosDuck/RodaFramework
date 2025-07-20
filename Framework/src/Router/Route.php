@@ -22,7 +22,7 @@ class Route {
 
     public function getController(): string
     {
-        return $this->controller;
+        return 'App\\Controllers\\' . $this->controller;
     }
 
     public function getControllerMethod(): string

@@ -6,12 +6,12 @@ use Framework\Controllers\AbstractAPIController;
 
 class ApiController extends AbstractAPIController
 {
-    public function welcome()
+    public function welcome(string $name)
     {
-        sleep(4);
+        sleep(2);
         $this->sendJsonResponse([
             'success' => true,
-            'message' => 'Welcome to the API'
+            'message' => "Welcome to the API, $name"
         ]);
     }
 

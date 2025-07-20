@@ -4,53 +4,44 @@ namespace Framework\Router;
 
 use App\Controllers\ErrorController;
 use Framework\Controllers\AbstractController;
+use Framework\DependencyInjection\Container;
 use Framework\Exceptions\RouteException;
-use Framework\Logger\LogService;
+use Framework\Logger\ILogService;
 use Framework\Logger\LogType;
+use Framework\Session\ISession;
 
-class Router {
+class Router implements IRouter {
     /** @var Route[] $routes */
     protected array $routes = [];
 
-    /**
-     * Add a GET route
-     */
+    public function __construct(
+        private ILogService $logService,
+        private ISession $session,
+    ) { }
+
     public function get(string $uri, string $controller): void 
     {
         $this->registerRoute('GET', $uri, $controller);
     }
 
-    /**
-     * Add a POST route
-     */
     public function post(string $uri, string $controller): void
     {
         $this->registerRoute('POST', $uri, $controller);
     }
 
-    /**
-     * Add a PUT route
-     */
     public function put(string $uri, string $controller): void 
     {
         $this->registerRoute('PUT', $uri, $controller);
     }
         
-    /**
-     * Add a DELETE route
-     */
     public function delete(string $uri, string $controller): void 
     {
         $this->registerRoute('DELETE', $uri, $controller);
     }
 
-    /**
-     * Route the request
-     */
     public function route(string $uri): void 
     {
         $requestMethod = $this->getRequestMethodName();
-        $logService = LogService::getLogger();
 
         foreach($this->routes as $route) {
             $params = $this->isRouteMatched($route, $uri, $requestMethod);
@@ -59,7 +50,7 @@ class Router {
                 try {
                     $this->callMethod($route, $params);
                 } catch (\Exception $e) {
-                    $logService->exceptionLog($e);
+                    $this->logService->exceptionLog($e);
                     ErrorController::internalServerError();
                 } finally {
                     return;
@@ -67,7 +58,7 @@ class Router {
             }
         }
         ErrorController::notFound();
-        $logService->log("Route '$uri' not found", LogType::WARNING);
+        $this->logService->log("Route '$uri' not found", LogType::WARNING);
     }
 
     /**
@@ -141,23 +132,20 @@ class Router {
      */
     private function callMethod(Route $route, array $params): void 
     {
-        $controller = 'App\\Controllers\\' . $route->getController();
-        if (!class_exists($controller)) {
-            throw new RouteException("Class $controller does not exist!");
-        }
-
-        $controllerInstance = new $controller();
-        if (!$controllerInstance instanceof AbstractController) {
-            throw new RouteException("Class $controller does not inherit " . AbstractController::class);
+        $controllerName = $route->getController();
+        $controller = Container::get($route->getController());
+        
+        if (!$controller instanceof AbstractController) {
+            throw new RouteException("Class $controllerName does not inherit " . AbstractController::class);
         }
 
         $controllerMethod = $route->getControllerMethod();
-        if (!method_exists($controllerInstance, $controllerMethod)) {
-            throw new RouteException("Class $controller does not contain method with name $controllerMethod");
+        if (!method_exists($controller, $controllerMethod)) {
+            throw new RouteException("Class $controllerName does not contain method with name $controllerMethod");
         }
 
-        $controllerInstance->setQuery($_GET);
-        $controllerInstance->setRawBody(file_get_contents('php://input'));
-        $controllerInstance->$controllerMethod($params);
+        $controller->setQuery($_GET);
+        $controller->setRawBody(file_get_contents('php://input'));
+        $controller->$controllerMethod(...$params);
     }
 }
