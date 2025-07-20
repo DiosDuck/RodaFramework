@@ -20,4 +20,13 @@ class PHPConfigReader implements IConfigReader {
     {
         return require __DIR__ . '/../../config/db.php';
     }
+
+    /**
+     * Get array of data stored in config/db.php
+     * @see config/db.php
+     */
+    public static function getSessionFile(): array
+    {
+        return require __DIR__ . '/../../config/session.php';
+    }
 }

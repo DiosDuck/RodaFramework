@@ -3,14 +3,14 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../helpers.php';
 
 use App\Controllers\ErrorController;
-use Framework\Session;
+use Framework\Session\Session;
 use Framework\Logger\LogService;
 
-Session::start();
-$router = require basePath('routes.php');
-
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 try {
+    Session::start();
+    $router = require basePath('routes.php');
+
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $router->route($uri);
 } catch (Exception $e) {
     ErrorController::internalServerError();

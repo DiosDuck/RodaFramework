@@ -1,6 +1,8 @@
 <?php
 
-namespace Framework;
+namespace Framework\Session;
+
+use Framework\ConfigReader\PHPConfigReader;
 
 class Session {
     /**
@@ -9,7 +11,8 @@ class Session {
     public static function start(): void 
     {
         if(session_status() == PHP_SESSION_NONE) {
-            session_start();
+            $options = PHPConfigReader::getSessionFile();
+            session_start($options);
         }
     }
 
