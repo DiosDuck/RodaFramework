@@ -3,8 +3,11 @@
 namespace Framework\Router;
 
 use App\Controllers\ErrorController;
+use ErrorException;
+use Framework\Authorization\IAuthorizationService;
 use Framework\Controllers\AbstractController;
 use Framework\DependencyInjection\Container;
+use Framework\Exceptions\ForbiddenException;
 use Framework\Exceptions\RouteException;
 use Framework\Logger\ILogService;
 use Framework\Logger\LogType;
@@ -15,28 +18,31 @@ class Router implements IRouter {
     protected array $routes = [];
 
     public function __construct(
-        private ILogService $logService,
-        private ISession $session,
-    ) { }
+        private readonly ILogService $logService,
+        private readonly ISession $session,
+        private readonly IAuthorizationService $authorizationService,
+    ) {
+        $this->session->start();
+     }
 
-    public function get(string $uri, string $controller): void 
+    public function get(string $uri, string $controller, array|string $authorizedRoles = '*'): void 
     {
-        $this->registerRoute('GET', $uri, $controller);
+        $this->registerRoute('GET', $uri, $controller, $authorizedRoles);
     }
 
-    public function post(string $uri, string $controller): void
+    public function post(string $uri, string $controller, array|string $authorizedRoles = '*'): void
     {
-        $this->registerRoute('POST', $uri, $controller);
+        $this->registerRoute('POST', $uri, $controller, $authorizedRoles);
     }
 
-    public function put(string $uri, string $controller): void 
+    public function put(string $uri, string $controller, array|string $authorizedRoles = '*'): void 
     {
-        $this->registerRoute('PUT', $uri, $controller);
+        $this->registerRoute('PUT', $uri, $controller, $authorizedRoles);
     }
         
-    public function delete(string $uri, string $controller): void 
+    public function delete(string $uri, string $controller, array|string $authorizedRoles = '*'): void 
     {
-        $this->registerRoute('DELETE', $uri, $controller);
+        $this->registerRoute('DELETE', $uri, $controller, $authorizedRoles);
     }
 
     public function route(string $uri): void 
@@ -48,7 +54,10 @@ class Router implements IRouter {
             
             if ($params !== false) {
                 try {
+                    $this->checkIfAuthorized($route);
                     $this->callMethod($route, $params);
+                } catch (ForbiddenException) {
+                    ErrorController::forbidden()();
                 } catch (\Exception $e) {
                     $this->logService->exceptionLog($e);
                     ErrorController::internalServerError();
@@ -64,7 +73,7 @@ class Router implements IRouter {
     /**
      * Add a new route (made private to push using the other methods)
      */
-    private function registerRoute(string $method, string $uri, string $action): void 
+    private function registerRoute(string $method, string $uri, string $action, array|string $authorizedRoles): void 
     {
         list($controller, $controllerMethod) = explode('@', $action);
         $this->routes[] = new Route(
@@ -72,6 +81,7 @@ class Router implements IRouter {
             $uri,
             $controller,
             $controllerMethod,
+            $authorizedRoles,
         );
     }
 
@@ -147,5 +157,17 @@ class Router implements IRouter {
         $controller->setQuery($_GET);
         $controller->setRawBody(file_get_contents('php://input'));
         $controller->$controllerMethod(...$params);
+    }
+
+    /**
+     * Check if the route can be accessed through Authorization Service
+     * 
+     * @throws ForbiddenException when the user cannot access respective endpoint
+     */
+    private function checkIfAuthorized(Route $route): void
+    {
+        if (!$this->authorizationService->isAuthorized($route)) {
+            throw new ForbiddenException('User is not allowed');
+        }
     }
 }

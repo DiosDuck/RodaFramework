@@ -6,18 +6,16 @@ use Framework\Controllers\AbstractAPIController;
 
 class ApiController extends AbstractAPIController
 {
-    public function welcome(string $name)
+    public function welcome(string $name): void
     {
-        sleep(2);
         $this->sendJsonResponse([
             'success' => true,
             'message' => "Welcome to the API, $name"
         ]);
     }
 
-    public function jsonBody()
+    public function jsonBody(): void
     {
-        sleep(2);
         $request = $this->getJsonBody();
         $data['success'] = true;
         $data['message'] = 'Data received';

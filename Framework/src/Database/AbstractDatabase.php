@@ -8,7 +8,7 @@ use PDO;
 use Exception;
 
 abstract class AbstractDatabase {
-    protected readonly PDO $conn;
+    protected PDO $conn;
 
     /**
      * Query the database

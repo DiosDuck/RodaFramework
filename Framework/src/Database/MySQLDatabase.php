@@ -8,7 +8,6 @@ use Exception;
 use Framework\ConfigReader\PHPConfigReader;
 
 class MySQLDatabase extends AbstractDatabase {
-
     public function __construct()
     {
         $config = PHPConfigReader::getDatabaseFile();

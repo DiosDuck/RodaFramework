@@ -8,6 +8,7 @@ class Route {
         private string $uri,
         private string $controller,
         private string $controllerMethod,
+        private string|array $authorizedRoles,
     ) {}
 
     public function getMethod(): string
@@ -28,5 +29,10 @@ class Route {
     public function getControllerMethod(): string
     {
         return $this->controllerMethod;
+    }
+
+    public function getAuthorizedRoles(): string|array
+    {
+        return $this->authorizedRoles;
     }
 }

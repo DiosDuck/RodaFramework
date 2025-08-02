@@ -6,6 +6,7 @@ return [
         'args' => [
             Framework\Logger\ILogService::class,
             Framework\Session\ISession::class,
+            Framework\Authorization\IAuthorizationService::class,
         ]
     ],
 
@@ -27,4 +28,11 @@ return [
     Framework\ConfigReader\IConfigReader::class => [
         'class' => Framework\ConfigReader\PHPConfigReader::class,
     ],
+
+    Framework\Authorization\IAuthorizationService::class => [
+        'class' => Framework\Authorization\AuthorizationService::class,
+        'args' => [
+            Framework\Session\ISession::class,
+        ]
+    ]
 ];

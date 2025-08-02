@@ -19,3 +19,35 @@ function handleJsonBody(id, url, method, body) {
         console.error('Error:', error);
     });
 }
+
+const input = [];
+
+document.addEventListener('keypress', (e) => {
+    input.push(e.key);
+    if (input.length !== 4) {
+        return;
+    }
+   
+    let code = input.join('');
+    if (code === 'luna') {
+        fetch(
+            '/api/admin/signed',
+            {
+                method: 'POST'
+            }
+        )
+        .then(response => {if(response.ok) console.log('admin granted')})
+        .catch(error => console.warn('admin could not be granted'))
+    }
+    else if (code === 'roda') {
+        fetch(
+            '/api/admin/unsigned',
+            {
+                method: 'POST'
+            }
+        )
+        .then(response => {if(response.ok) console.log('admin removed')})
+        .catch(error => console.warn('admin could not be removed'))
+    }
+    input.shift();
+})

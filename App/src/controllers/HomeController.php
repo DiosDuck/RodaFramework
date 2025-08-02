@@ -5,7 +5,7 @@ namespace App\Controllers;
 use Framework\Controllers\AbstractViewController;
 
 class HomeController extends AbstractViewController {
-    public function index()
+    public function index(): void
     {
         $this->setTItle('Welcome Page');
         $this->addHeader('meta name="description" content="Roda\'s Framework Welcome Page which shows a view and two endpoints"');

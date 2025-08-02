@@ -1,6 +1,18 @@
 :root {
     font-size: 62.5%; /* 10px */
 
+    --primary-color: #f3f3f3;
+    --secondary-color: #333;
+
+    --primary-entity-color: #EEE;
+    --primary-entity-subititle-color: #BBB;
+    --soft-orange: #f2e2d7;
+}
+
+@media (max-width: 568px) {
+    :root {
+        font-size: 50%; /* 8px */
+    }
 }
 
 body {
@@ -16,6 +28,33 @@ body {
     font-size: 1.6rem;
 }
 
+nav {
+    background-color: var(--secondary-color);
+    height: 6rem;
+    display: flex;
+    color: var(--primary-color);
+
+    & > * {
+        align-content: center;
+        padding: 1rem;
+    }
+
+    & > .title {
+        margin-right: auto;
+        font-size: 2.5rem;
+    }
+
+    & > a {
+        text-decoration: none;
+        color: var(--primary-color);
+
+        &:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+    }
+}
+
 main {
     flex-grow: 1;
 
@@ -23,10 +62,12 @@ main {
     grid-template-columns: [page-start] auto [content-start] repeat(8, [col-start] 1fr [col-end]) [content-end] auto [page-end];
     align-items: center;
     justify-items: center;
-    row-gap: 1rem;
+    row-gap: 2rem;
+    
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
 
-    margin-bottom: 15vh;
-    margin-bottom: 1rem;
+    padding-bottom: 2rem;
 }
 
 main h1 {
@@ -39,7 +80,7 @@ main h1 {
     grid-column: content-start / content-end;
 
     font-family: 'Courier New', monospace;
-    background-color: #EEE;
+    background-color: var(--primary-entity-color);
 
     padding: 5rem;
     border-radius: 1rem;
@@ -62,7 +103,7 @@ main h1 {
 .json-code-url {
     margin-left: 2rem;
     font-size: 1rem;
-    color: #BBB;
+    color: var(--primary-entity-subititle-color);
 }
 
 @media (max-width: 568px) {
@@ -78,7 +119,7 @@ main h1 {
 }
 
 .json-code-loader {
-    border: 0.5rem solid #f3f3f3;
+    border: 0.5rem solid var(--primary-color);
     border-radius: 50%;
     border-top: 0.5rem solid #3498db;
     width: 2.5rem;
@@ -93,7 +134,7 @@ main h1 {
 
 .json-code-response {
     min-width: 80%;
-    background-color: #f2e2d7;
+    background-color: var(--soft-orange);
     padding: 1rem;
     border-radius: 1rem;
 }
@@ -119,8 +160,8 @@ main h1 {
 footer {
     min-height: 15vh;
 
-    background: #333;
-    color: white;
+    background: var(--secondary-color);
+    color: var(--primary-color);
 
     display: flex;
     justify-content: center;
@@ -128,6 +169,12 @@ footer {
     text-align: center;
 
     font-size: 0.75rem;
+}
+
+@media (max-width: 568px) {
+    footer {
+        font-size: 1rem;
+    }
 }
 
 footer div {

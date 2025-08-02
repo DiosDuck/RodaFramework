@@ -14,6 +14,7 @@
     <?php endif?>
 </head>
 <body>
+    <?php loadPartial('navbar')?>
     <?= $body ?>
     <?php loadPartial('footer')?>
 </body>
