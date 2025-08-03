@@ -104,3 +104,27 @@ function setResponseCode(int $code = 200): void
 {
    http_response_code($code);
 }
+
+/**
+ * Read rows from .env file
+ * 
+ * It wil skip empty lines, only counting the lines which contains '=' in them
+ */
+function readEnvFile(): array
+{
+   $data = file_get_contents(basePath('.env'));
+   if (!$data) {
+      return [];
+   }
+   $lines = explode(PHP_EOL, $data);
+   
+   $envValues = [];
+   foreach ($lines as $line) {
+      $split = explode('=', $line, 2);
+      if (count($split) > 1) {
+         $envValues[$split[0]] = $split[1];
+      }
+   }
+
+   return $envValues;
+}
