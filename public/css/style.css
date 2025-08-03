@@ -1,45 +1,109 @@
+:root {
+    font-size: 62.5%; /* 10px */
+
+    --primary-color: #f3f3f3;
+    --secondary-color: #333;
+
+    --primary-entity-color: #EEE;
+    --primary-entity-subititle-color: #BBB;
+    --soft-orange: #f2e2d7;
+}
+
+@media (max-width: 568px) {
+    :root {
+        font-size: 50%; /* 8px */
+    }
+}
+
 body {
     margin: 0;
     padding: 0;
+
     display: flex;
     flex-direction: column;
+    
     min-height: 100vh;
+    
     font-family: Verdana, sans-serif;
-    font-size: 16px;
+    font-size: 1.6rem;
 }
+
+nav {
+    background-color: var(--secondary-color);
+    height: 6rem;
+    display: flex;
+    color: var(--primary-color);
+
+    & > * {
+        align-content: center;
+        padding: 1rem;
+    }
+
+    & > .title {
+        margin-right: auto;
+        font-size: 2.5rem;
+    }
+
+    & > a {
+        text-decoration: none;
+        color: var(--primary-color);
+
+        &:hover {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+        }
+    }
+}
+
 main {
     flex-grow: 1;
 
-    display: flex;
-    justify-content: space-evenly;
-    flex-flow: column;
+    display: grid;
+    grid-template-columns: [page-start] auto [content-start] repeat(8, [col-start] 1fr [col-end]) [content-end] auto [page-end];
     align-items: center;
-    margin-bottom: 15vh;
-    gap: 1rem;
+    justify-items: center;
+    row-gap: 2rem;
+    
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
 
-    margin-bottom: 1rem;
+    padding-bottom: 2rem;
 }
 
 main h1 {
+    grid-column: page-start / page-end;
+
     font-family: 'Courier New', monospace;
-    width: 100%;
-    text-align: center;
 }
 
-main .json-code {
+.json-code {
+    grid-column: content-start / content-end;
+
     font-family: 'Courier New', monospace;
-    text-align: left;
-    background-color: #EEE;
-    width: 768px;
-    max-width: 90%;
-    padding: 5%;
-    border-radius: 5%;
+    background-color: var(--primary-entity-color);
+
+    padding: 5rem;
+    border-radius: 1rem;
+
+    min-width: 70rem;
+}
+
+@media (max-width: 800px) {
+    .json-code {
+        width: calc(100vw - 4rem);
+        min-width: unset;
+        padding: 2rem;
+    }
+}
+
+.json-code-description {
+    font-size: 2.25rem;
 }
 
 .json-code-url {
-    margin-left: 5%;
-    font-size: 0.875rem;
-    color: #BBB;
+    margin-left: 2rem;
+    font-size: 1rem;
+    color: var(--primary-entity-subititle-color);
 }
 
 @media (max-width: 568px) {
@@ -51,11 +115,11 @@ main .json-code {
 .json-code-content {
     display: flex;
     justify-content: center;
-    margin: 2.25rem 0;
+    margin-top: 5rem;
 }
 
 .json-code-loader {
-    border: 0.5rem solid #f3f3f3;
+    border: 0.5rem solid var(--primary-color);
     border-radius: 50%;
     border-top: 0.5rem solid #3498db;
     width: 2.5rem;
@@ -69,8 +133,8 @@ main .json-code {
 }
 
 .json-code-response {
-    width: 80%;
-    background-color: #f2e2d7;
+    min-width: 80%;
+    background-color: var(--soft-orange);
     padding: 1rem;
     border-radius: 1rem;
 }
@@ -81,19 +145,23 @@ main .json-code {
     }
 }
 
-code {
+.json-code-response > pre {
+    overflow-y: scroll;
+}
+
+.json-code-response > pre > code {
     font-family: Consolas,"courier new";
     color: crimson;
     padding: 0.125rem;
-    font-size: 1.125rem;
+    font-size: 1.5rem;
+    overflow-y: scroll;
 }
 
 footer {
-    width: 100%;
     min-height: 15vh;
 
-    background: #333;
-    color: white;
+    background: var(--secondary-color);
+    color: var(--primary-color);
 
     display: flex;
     justify-content: center;
@@ -101,6 +169,12 @@ footer {
     text-align: center;
 
     font-size: 0.75rem;
+}
+
+@media (max-width: 568px) {
+    footer {
+        font-size: 1rem;
+    }
 }
 
 footer div {

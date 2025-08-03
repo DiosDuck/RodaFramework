@@ -2,23 +2,21 @@
 
 namespace App\Controllers;
 
-use Framework\AbstractController;
+use Framework\Controllers\AbstractAPIController;
 
-class ApiController extends AbstractController
+class ApiController extends AbstractAPIController
 {
-    public function welcome()
+    public function welcome(string $name): void
     {
-        sleep(4);
         $this->sendJsonResponse([
             'success' => true,
-            'message' => 'Welcome to the API'
+            'message' => "Welcome to the API, $name"
         ]);
     }
 
-    public function jsonBody()
+    public function jsonBody(): void
     {
-        sleep(2);
-        $request = $this->getBodyAsJson();
+        $request = $this->getJsonBody();
         $data['success'] = true;
         $data['message'] = 'Data received';
         $data['data'] = $request;

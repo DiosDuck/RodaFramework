@@ -1,12 +1,9 @@
-<?php loadPartial("head", [
-    'title' => 'Welcome page'
-])?>
 <main>
     <h1>Welcome!</h1>
     <?php loadPartial("json-code", [
         'id' => 'welcome-api',
         'description' => 'Welcome to the API',
-        'url' => '/api/welcome',
+        'url' => '/api/welcome/Roda',
         'method' => 'GET',
         'body' => '{}'
     ])?>
@@ -18,4 +15,3 @@
         'body' => '{"name": "John Doe","email": "john.doe@email.com"}'
     ])?>
 </main>
-<?php loadPartial("footer")?>

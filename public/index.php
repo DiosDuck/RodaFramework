@@ -1,18 +1,26 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../helpers.php';
+require __DIR__ . '/php/helpers.php';
 
-use App\Controllers\ErrorController;
-use Framework\Session;
-use Framework\Logger;
+use Framework\Controllers\AbstractErrorController;
+use Framework\DependencyInjection\Container;
+use Framework\Logger\ILogService;
+use Framework\Router\Router;
 
-Session::start();
-$router = require basePath('routes.php');
+Container::construct();
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 try {
+    /** @var Router $router */
+    $router = require basePath('routes.php');
+
+    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $router->route($uri);
-} catch (Exception $e) {
-    ErrorController::internalServerError();
-    Logger::exceptionLog($e);
+} catch (Throwable $e) {
+    /** @var AbstractErrorController $errorController */
+    $errorController = Container::get(AbstractErrorController::class);
+    $errorController->renderError('internal server error', 500);
+
+    /** @var ILogService $logService */
+    $logService = Container::get(ILogService::class);
+    $logService->exceptionLog($e);
 }

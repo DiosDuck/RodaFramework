@@ -1,0 +1,17 @@
+<main>
+    <h1>Welcome, my admin!</h1>
+    <?php loadPartial("json-code", [
+        'id' => 'welcome-api',
+        'description' => 'Welcome to the API',
+        'url' => '/api/welcome/ADMIN_Roda',
+        'method' => 'GET',
+        'body' => '{}'
+    ])?>
+    <?php loadPartial("json-code", [
+        'id' => 'json-body-api',
+        'description' => 'This is an example of an endpoint that accepts a JSON body',
+        'url' => '/api/json-body',
+        'method' => 'POST',
+        'body' => '{"name": "Roda","email": "roda@not_real.com"}'
+    ])?>
+</main>

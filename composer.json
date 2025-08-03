@@ -1,13 +1,16 @@
 {
+    "name": "roda/framework",
     "description": "Creating a framework from 0",
+    "type": "project",
+    "license": "MIT",
     "authors": [
         {
-            "name": "DiosDuck"
+            "name": "Tapuc 'Roda' Mihai-Ovidiu"
         }
     ],
     "autoload": {
         "psr-4": {
-            "Framework\\": "Framework/",
+            "Framework\\": "Framework/src/",
             "App\\": "App/src/"
         }
     },
