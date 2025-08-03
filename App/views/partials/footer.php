@@ -1,6 +1,6 @@
 <footer>
     <div>
-        No copyright, use it as much as you want, but I suggest only for learning.
+        Use if for fun or for personal projects. Do not take ownership over it.
     </div>
 </footer>
 </body>

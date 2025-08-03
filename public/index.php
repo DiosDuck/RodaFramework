@@ -1,8 +1,7 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-require __DIR__ . '/../helpers.php';
+require __DIR__ . '/php/helpers.php';
 
-use App\Controllers\ErrorController;
 use Framework\Controllers\AbstractErrorController;
 use Framework\DependencyInjection\Container;
 use Framework\Logger\ILogService;

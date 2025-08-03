@@ -3,7 +3,7 @@
     <?php loadPartial("json-code", [
         'id' => 'welcome-api',
         'description' => 'Welcome to the API',
-        'url' => '/api/welcome/Roda',
+        'url' => '/api/welcome/ADMIN_Roda',
         'method' => 'GET',
         'body' => '{}'
     ])?>
@@ -12,6 +12,6 @@
         'description' => 'This is an example of an endpoint that accepts a JSON body',
         'url' => '/api/json-body',
         'method' => 'POST',
-        'body' => '{"name": "John Doe","email": "john.doe@email.com"}'
+        'body' => '{"name": "Roda","email": "roda@not_real.com"}'
     ])?>
 </main>

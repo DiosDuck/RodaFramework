@@ -1,49 +1,115 @@
 # RodaFramework
 
-RodaFramework is a framework which was build from the scratch. It started with the Udemy Course, [PHP from scratch course](https://www.udemy.com/course/php-from-scratch-course/), which I highly recommend following it, then build and add new stuff into it to improve it for much more wider usage.
+**RodaFramework** is a PHP framework built entirely from scratch. It originated from the Udemy course [PHP from scratch course](https://www.udemy.com/course/php-from-scratch-course/), which I highly recommend. From there, I expanded and improved it to support broader use cases.
+
 
 ## Requirements
 
-At the moment of writting, I was using PHP 8.3.13, but any PHP greater than 8.1 should work. Also composer is required too, however at the moment it can be skipped and replaces with personal [PSR-4 Autoloader](https://www.php-fig.org/psr/psr-4/).
+At the time of writing, I was using **PHP 8.3.13**, but any version **PHP ≥ 8.1** should work. Composer is required, although it can be skipped if you prefer to use a personal [PSR-4 Autoloader](https://www.php-fig.org/psr/psr-4/).
 
 ## Installation
 
-Just install composer configuration and it's done.
+Run the following command to install dependencies via Composer:
 ```
 composer install
 ```
-The Database configurations were written with MySQL in mind, however it's not required (and used) to make it run. In case you want to use it and practice, modify `config\db.php` and `Framework\Database.php`.
+Database configuration is set up for MySQL, but using a database is not required to run the framework. If you'd like to enable it for practice, update the settings in `App\\config\\db.php` and use the classes insideo of `Framework\\Database` folder.
 
-## Executing
+## Running the App
 
 It's very simple, just run the following, then voilà!
 ```
 cd public
 php -S localhost:80
 ```
-After that, accessing from browser [localhost](http://localhost:80) will display the main page.
+After that, visit [localhost](http://localhost:80) on your browser.
 
-## Basic explanations
+## Basic Concepts
 
-Routes are registered into `routes.php`, by explicitally telling method, URI, controller and action.
+### Routing
+
+Routes are defined in `routes.php`. Each route includes the HTTP method, URI, controller action, and (optionally) the required user role:
 ```
-$router->method('/uri', 'Controller@action');
+$router->method('/uri', 'Controller@action', 'role');
 ```
-Controller must be from `App\\Controllers` namespace, being placed into `App\src\Controllers` folder respecting PSR-4 rule, and be instance of `Framework\\Controllers\\AbstractController.php`.
+Controllers must belong to the App\Controllers namespace and be located in App\src\Controllers, following PSR-4.
+Controller must belong to the `App\\Controllers` namespace and be located in `App\src\Controllers`, following PSR-4.
 
-For sending parameters throw URI, encapsulate the parameter within **{}** with the parameter name. For content body and query parameters they can be extracted throw extention of `Framework\\Controllers\\AbstractController.php`
+They must also extend `Framework\\Controllers\\AbstractController.php`.
+
+For dynamic routes, use curly braces to define parameters:
 ```
 $router->method('/uri/{parameter_name}/details', 'Controller@action');
 ```
-For rendering the page, it is used views and partials. Views represents the main page which are being called throw controller's actions. It can be called throw method `renderView()` if `Framework\\Controllers\\AbstractViewController.php` is extended or `render()` otherwise.
+Request body and query parameters can be accessed through the base controller.
+
+### Views and Partials
+
+Pages are rendered using views and partials.
+
+- `renderView()` is available if your controller extends `Framework\\Controllers\\AbstractViewController`
+- Otherwise, use render()
+
 ```
 $this->renderView('view_name', ['parameter1' => value1, 'parameter2' => value2]);
 ```
-Views respect the following path `App\views\controller\view_name.view.php`, partials respect the following path `App\views\partials\partial_name.php` and base templates respect the following path `App\views\base.view.php`.
 
-`render()` has the following parameters: view which represents the view name, including the controller's name (in this example would be `home\index`), data which are the view data used for rendering, and base template which represents the body of it. Base uses something similar to Twig's template, where we create a basit template for the website, then add the extra content on it depending of the page.
+**Path Conventions:**
 
-`loadPartial()` is a much more simpler method, requesting partial's name and data to render the partial. In exchange it renders the specific part of the code. They are used in views and template files to render specific parts of the code to avoid repetition.
+- Views: `App\\views\\controller\\view_name.view.php`
+- Partials: `App\\views\\partials\\partial_name.php`
+- Base templates: `App\\views\\base.view.php`
+
+`render()`
+
+Parameters:
+- name: View name, like 'home/index'
+- data: Array of view data
+- base: Optional base template
+
+The system uses a layout structure similar to Twig — a reusable base template with injected content per page.
+
+`loadPartial()`
+
+Parameters:
+- name: Partial name, like 'home/index'
+- data: Array of view data
+
+Used in views and templates to reuse repeated sections (e.g., headers, forms).
+
+### Dependency Injection
+
+Services, Controllers and special parameters are defined in `App\\config\\di.php`.
+```
+Class_Name_or_Alias => [
+    'class' => Class_Name,
+    'method' => Static_Method,
+    'args' => [
+        'argument_1',
+        'Class_Name_Argument_2',
+    ]
+]
+```
+
+- **class**: Required if using an alias, abstract, or interface
+- **method**: Optional — used if instantiation doesn’t happen through the constructor
+- **args**: Arguments passed to the constructor or method
+
+You can override any services defined in `Framework\\config\\di.php` by redefining them in `App\\config\\di.php`.
+
+**NOTE:** The only class that cannot be overridden is `Framework\\DependencyInjection\\Container`.
+
+### Configuration Files
+
+Configuration files are stored in `App\\config` folder. They help automate common setups and keep settings easy to locate.
+
+Currently supported config files:
+- Dependency Injection
+- Database
+- Logger
+- Session
+
+To use a custom configuration reader, define your own implementation of `Framework\\ConfigReader\\IConfigReader` in your DI file.
 
 ## License
 
@@ -53,4 +119,4 @@ You cannot claim ownership of the original work, but you may use it in open-sour
 
 ## Wishes
 
-There could be more missing parts through this documentation, however I suggest following the course and play around with the code to see for yourself. Have fun :)
+This framework was done as a fun challenge for myself, to try to imagine how other frameworks work behind the scene and integrate as much as I can inside of it. Have fun :)

@@ -8,6 +8,6 @@ class AdminController extends AbstractViewController {
     public function index(): void
     {
         $this->setTItle('Welcome Admin Page');
-        $this->renderView('home/admin');
+        $this->renderView('admin/index');
     }
 }
