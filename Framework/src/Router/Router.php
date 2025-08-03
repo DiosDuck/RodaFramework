@@ -2,10 +2,9 @@
 
 namespace Framework\Router;
 
-use App\Controllers\ErrorController;
-use ErrorException;
 use Framework\Authorization\IAuthorizationService;
 use Framework\Controllers\AbstractController;
+use Framework\Controllers\AbstractErrorController;
 use Framework\DependencyInjection\Container;
 use Framework\Exceptions\ForbiddenException;
 use Framework\Exceptions\RouteException;
@@ -57,16 +56,16 @@ class Router implements IRouter {
                     $this->checkIfAuthorized($route);
                     $this->callMethod($route, $params);
                 } catch (ForbiddenException) {
-                    ErrorController::forbidden()();
+                    $this->callErrorMethod(401, 'forbidden');
                 } catch (\Exception $e) {
                     $this->logService->exceptionLog($e);
-                    ErrorController::internalServerError();
+                    $this->callErrorMethod(500, 'internal server error');
                 } finally {
                     return;
                 }
             }
         }
-        ErrorController::notFound();
+        $this->callErrorMethod(404, 'not found');
         $this->logService->log("Route '$uri' not found", LogType::WARNING);
     }
 
@@ -169,5 +168,12 @@ class Router implements IRouter {
         if (!$this->authorizationService->isAuthorized($route)) {
             throw new ForbiddenException('User is not allowed');
         }
+    }
+
+    private function callErrorMethod(string $code, string $message): void
+    {
+        /** @var AbstractErrorController $errorController */
+        $errorController = Container::get(AbstractErrorController::class);
+        $errorController->renderError($message, $code);
     }
 }

@@ -34,5 +34,9 @@ return [
         'args' => [
             Framework\Session\ISession::class,
         ]
+    ],
+
+    Framework\Controllers\AbstractErrorController::class => [
+        'class' => Framework\Controllers\ErrorController::class,
     ]
 ];
