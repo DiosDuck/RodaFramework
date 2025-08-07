@@ -14,6 +14,9 @@ class Container
     private static array $config = [];
     private static array $objectCache = [];
 
+    /**
+     * Prepare container
+     */
     public static function construct(): void
     {
         if (PHPConfigReader::hasDIAppFile()) {
@@ -24,6 +27,12 @@ class Container
         }
     }
 
+    /**
+     * Get anything from container (it will return mixed value)
+     * 
+     * @param string $name the id of the instance, mapped in dependency injection file
+     * @return mixed the instance built
+     */
     public static function get(string $name): mixed
     {
         if (isset(self::$objectCache[$name])) {
@@ -65,9 +74,11 @@ class Container
     }
 
     /** 
+     * Get class from container (with type hint too)
+     * 
      * @template T
-     * @param class-string<T> $className
-     * @return T 
+     * @param class-string<T> $className the instance name and type, mapped in dependency injection file
+     * @return T the instance built
      */
     public static function getClass(string $className): mixed
     {
