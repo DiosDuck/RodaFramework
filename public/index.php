@@ -16,11 +16,9 @@ try {
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $router->route($uri);
 } catch (Throwable $e) {
-    /** @var AbstractErrorController $errorController */
-    $errorController = Container::get(AbstractErrorController::class);
+    $errorController = Container::getClass(AbstractErrorController::class);
     $errorController->renderError('internal server error', 500);
 
-    /** @var ILogService $logService */
-    $logService = Container::get(ILogService::class);
+    $logService = Container::getClass(ILogService::class);
     $logService->exceptionLog($e);
 }

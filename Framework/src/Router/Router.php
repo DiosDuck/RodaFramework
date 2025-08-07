@@ -172,8 +172,7 @@ class Router implements IRouter {
 
     private function callErrorMethod(string $code, string $message): void
     {
-        /** @var AbstractErrorController $errorController */
-        $errorController = Container::get(AbstractErrorController::class);
+        $errorController = Container::getClass(AbstractErrorController::class);
         $errorController->renderError($message, $code);
     }
 }

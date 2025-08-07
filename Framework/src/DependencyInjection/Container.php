@@ -63,4 +63,14 @@ class Container
             throw new DIException("Class '$class' or method '$method' not accesible");
         }
     }
+
+    /** 
+     * @template T
+     * @param class-string<T> $className
+     * @return T 
+     */
+    public static function getClass(string $className): mixed
+    {
+        return self::get($className);
+    }
 }
