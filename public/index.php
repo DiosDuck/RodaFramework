@@ -7,8 +7,6 @@ use Framework\DependencyInjection\Container;
 use Framework\Logger\ILogService;
 use Framework\Router\Router;
 
-Container::construct();
-
 try {
     /** @var Router $router */
     $router = require basePath('routes.php');
