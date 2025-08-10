@@ -8,8 +8,6 @@ use Framework\Logger\ILogService;
 use Framework\Router\Router;
 
 try {
-    $logService = Container::getObject(ILogService::class);
-    $logService->log("test");
     /** @var Router $router */
     $router = require basePath('routes.php');
 
