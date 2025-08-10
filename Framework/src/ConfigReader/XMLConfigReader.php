@@ -8,7 +8,7 @@ class XMLConfigReader implements IConfigReader {
      */
     public function getLoggerFile(): array
     {
-        return $this->readFile(self::APP_PATH . '/config/logger.xml');
+        return self::readFile(self::APP_PATH . '/config/logger.xml');
     }
 
     /**
@@ -16,7 +16,7 @@ class XMLConfigReader implements IConfigReader {
      */
     public function getDatabaseFile(): array
     {
-        return $this->readFile(self::APP_PATH . '/config/db.xml');
+        return self::readFile(self::APP_PATH . '/config/db.xml');
     }
 
     /**
@@ -24,7 +24,7 @@ class XMLConfigReader implements IConfigReader {
      */
     public function getSessionFile(): array
     {
-        return [];
+        return self::readFile(self::APP_PATH . '/config/session.xml');
     }
 
     /**
@@ -32,7 +32,7 @@ class XMLConfigReader implements IConfigReader {
      */
     public static function hasDIAppFile(): bool
     {
-        return false;
+        return file_exists(self::APP_PATH . '/config/di.xml');
     }
 
     /**
@@ -40,7 +40,7 @@ class XMLConfigReader implements IConfigReader {
      */
     public static function getDIAppFile(): array
     {
-        return [];
+        return self::readFile(self::APP_PATH . '/config/di.xml');
     }
 
     /**
@@ -48,7 +48,7 @@ class XMLConfigReader implements IConfigReader {
      */
     public static function getDIFrameworkFile(): array
     {
-        return [];
+        return self::readFile(self::FRAMEWORK_PATH . '/config/di.xml');
     }
 
     private static function readFile(string $filename): array

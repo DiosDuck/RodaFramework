@@ -9,7 +9,7 @@ class PHPConfigReader implements IConfigReader {
      */
     public function getLoggerFile(): array
     {
-        return require self::APP_PATH . '/config/logger.php';
+        return self::getFileDataOrDefault(self::APP_PATH . '/config/logger.php');
     }
 
     /**
@@ -18,7 +18,7 @@ class PHPConfigReader implements IConfigReader {
      */
     public function getDatabaseFile(): array
     {
-        return require self::APP_PATH . '/config/db.php';
+        return self::getFileDataOrDefault(self::APP_PATH . '/config/db.php');
     }
 
     /**
@@ -27,7 +27,7 @@ class PHPConfigReader implements IConfigReader {
      */
     public function getSessionFile(): array
     {
-        return require self::APP_PATH . '/config/session.php';
+        return self::getFileDataOrDefault(self::APP_PATH . '/config/session.php');
     }
 
     /**
@@ -45,7 +45,7 @@ class PHPConfigReader implements IConfigReader {
      */
     public static function getDIAppFile(): array
     {
-        return require self::APP_PATH . '/config/di.php';
+        return self::getFileDataOrDefault(self::APP_PATH . '/config/di.php');
     }
 
     /**
@@ -54,6 +54,15 @@ class PHPConfigReader implements IConfigReader {
      */
     public static function getDIFrameworkFile(): array
     {
-        return require self::FRAMEWORK_PATH . '/config/di.php';
+        return self::getFileDataOrDefault(self::FRAMEWORK_PATH . '/config/di.php');
+    }
+
+    private static function getFileDataOrDefault(string $name): array
+    {
+        if (!file_exists($name)) {
+            return [];
+        }
+
+        return require $name;
     }
 }

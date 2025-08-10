@@ -13,7 +13,7 @@ return [
     Framework\Logger\ILogService::class => [
         'class' => Framework\Logger\MultipleLogService::class,
         'args' => [
-            Framework\ConfigReader\XMLConfigReader::class,
+            Framework\ConfigReader\IConfigReader::class,
         ],
     ],
 
