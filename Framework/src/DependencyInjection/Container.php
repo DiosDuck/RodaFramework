@@ -22,15 +22,15 @@ class Container {
 
 
     /** 
-     * Get class from container (with type hint too)
+     * Get object from container (with type hint of the class too)
      * 
      * @template T
      * @param class-string<T> $className the instance name and type, mapped in dependency injection file
      * @return T the instance built
      */
-    public static function getClass(string $name): mixed
+    public static function getObject(string $className): mixed
     {
-        return self::get($name);
+        return self::get($className);
     }
 
     private static function initialize(): void

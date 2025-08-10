@@ -3,7 +3,7 @@
 use Framework\Router\IRouter;
 use Framework\DependencyInjection\Container;
 
-$router = Container::getClass(IRouter::class);
+$router = Container::getObject(IRouter::class);
 
 $router->get('', 'HomeController@index');
 $router->get('/api/welcome/{name}', 'ApiController@welcome');

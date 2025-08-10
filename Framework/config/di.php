@@ -11,8 +11,7 @@ return [
     ],
 
     Framework\Logger\ILogService::class => [
-        'class' => Framework\Logger\LogService::class,
-        'method' => 'getLogger',
+        'class' => Framework\Logger\MultipleLogService::class,
         'args' => [
             Framework\ConfigReader\IConfigReader::class,
         ],

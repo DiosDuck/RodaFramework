@@ -5,6 +5,9 @@ namespace Framework\Logger;
 use Framework\ConfigReader\IConfigReader;
 
 class LogService implements ILogService {
+
+    use LogTrait;
+
     private readonly string $path;
     private static LogService $instance;
 
@@ -20,7 +23,7 @@ class LogService implements ILogService {
     private function __construct(IConfigReader $configReader) {
         $data = $configReader->getLoggerFile();
         if (!$data) {
-            $this->path = '../../log.txt';
+            $this->path = basePath('log.text');
         } else {
             $this->path = $data['file'];
         }
@@ -28,16 +31,13 @@ class LogService implements ILogService {
 
     public function log(string $message, LogType $type = LogType::INFO): void
     {
-        $log = date('Y-m-d H:i:s') . ' ' . $type->label() . ' ' . $message . PHP_EOL;
+        $log = $this->buildLogMessage($message, $type);
         file_put_contents($this->path, $log, FILE_APPEND);
     }
 
-    public function exceptionLog(\Exception $e): void
+    public function exceptionLog(\Throwable $e): void
     {
-        $log = date('Y-m-d H:i:s') . ' ' . LogType::ERROR->label() . ' ' . $e->getMessage() . PHP_EOL;
-        foreach ($e->getTrace() as $trace) {
-            $log .= '    ' . $trace['file'] . ':' . $trace['line'] . PHP_EOL;
-        }
+        $log = $this->buildErrorLogMessage($e);
         file_put_contents($this->path, $log, FILE_APPEND);
     }
 }

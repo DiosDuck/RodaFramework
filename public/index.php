@@ -8,15 +8,17 @@ use Framework\Logger\ILogService;
 use Framework\Router\Router;
 
 try {
+    $logService = Container::getObject(ILogService::class);
+    $logService->log("test");
     /** @var Router $router */
     $router = require basePath('routes.php');
 
     $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $router->route($uri);
 } catch (Throwable $e) {
-    $errorController = Container::getClass(AbstractErrorController::class);
+    $errorController = Container::getObject(AbstractErrorController::class);
     $errorController->renderError('internal server error', 500);
 
-    $logService = Container::getClass(ILogService::class);
+    $logService = Container::getObject(ILogService::class);
     $logService->exceptionLog($e);
 }
