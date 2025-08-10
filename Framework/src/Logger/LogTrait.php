@@ -5,7 +5,7 @@ namespace Framework\Logger;
 trait LogTrait {
     private function buildLogMessage(string $message, LogType $log): string
     {
-        return sprintf('%s %s %s', date('[Y-m-d H:m:i]'), $log->label(), $message) . PHP_EOL;
+        return sprintf('%s %s %s', date('[Y-m-d H:i:s]'), $log->label(), $message) . PHP_EOL;
     }
 
     private function buildErrorLogMessage(\Throwable $e): string

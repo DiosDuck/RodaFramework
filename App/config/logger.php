@@ -1,7 +1,7 @@
 <?php
 
 return [
-  'files' => [
+  'file' => [
     'php://stdout',
     basePath('log.txt'),
   ]

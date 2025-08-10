@@ -14,7 +14,7 @@ interface IConfigReader {
     /**
      * Get array of app data for database config
      */
-    public static function getDatabaseFile(): array;
+    public function getDatabaseFile(): array;
 
     /**
      * Get array of app data for session config

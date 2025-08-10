@@ -13,7 +13,7 @@ return [
     Framework\Logger\ILogService::class => [
         'class' => Framework\Logger\MultipleLogService::class,
         'args' => [
-            Framework\ConfigReader\IConfigReader::class,
+            Framework\ConfigReader\XMLConfigReader::class,
         ],
     ],
 
@@ -35,7 +35,18 @@ return [
         ]
     ],
 
+    Framework\Database\AbstractDatabase::class => [
+        'class' => Framework\Database\MySQLDatabase::class,
+        'args' => [
+            Framework\ConfigReader\IConfigReader::class,
+        ]
+    ],
+
     Framework\Controllers\AbstractErrorController::class => [
         'class' => Framework\Controllers\ErrorController::class,
+    ],
+
+    Framework\ConfigReader\XMLConfigReader::class => [
+        
     ]
 ];

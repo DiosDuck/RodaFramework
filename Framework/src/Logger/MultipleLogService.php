@@ -14,8 +14,8 @@ class MultipleLogService implements ILogService {
         IConfigReader $configReader
     ) {
         $data = $configReader->getLoggerFile();
-        if (isset($data['files'])) {
-            $this->paths = $data['files'];
+        if (isset($data['file']) && is_array($data['file'])) {
+            $this->paths = $data['file'];
         } else if (isset($data['file'])) {
             $this->paths = [$data['file']];
         } else {

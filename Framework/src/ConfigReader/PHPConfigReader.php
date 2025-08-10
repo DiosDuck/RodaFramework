@@ -16,7 +16,7 @@ class PHPConfigReader implements IConfigReader {
      * Get array of data stored in App/config/db.php
      * @see App/config/db.php
      */
-    public static function getDatabaseFile(): array
+    public function getDatabaseFile(): array
     {
         return require self::APP_PATH . '/config/db.php';
     }
