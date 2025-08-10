@@ -40,5 +40,9 @@ class Container {
         }
         
         $format = EnvReader::getValue('FORMAT');
+        self::$containerReader = match(strtolower($format)) {
+            "php" =>  new PHPContainerReader(),
+            default => new PHPContainerReader(),
+        };
     }
 }
