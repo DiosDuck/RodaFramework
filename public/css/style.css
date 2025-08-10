@@ -145,10 +145,6 @@ main h1 {
     }
 }
 
-.json-code-response > pre {
-    overflow-y: scroll;
-}
-
 .json-code-response > pre > code {
     font-family: Consolas,"courier new";
     color: crimson;
