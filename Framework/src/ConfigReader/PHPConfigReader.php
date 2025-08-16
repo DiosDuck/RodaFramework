@@ -9,7 +9,11 @@ class PHPConfigReader implements IConfigReader {
      */
     public function getLoggerFile(): array
     {
-        return self::getFileDataOrDefault(self::APP_PATH . '/config/logger.php');
+        if ($data = self::getFileDataOrDefault(self::APP_PATH . '/config/logger.php')) {
+            return $data;
+        }
+
+        return self::getFileDataOrDefault(self::FRAMEWORK_PATH . '/config/logger.php');
     }
 
     /**

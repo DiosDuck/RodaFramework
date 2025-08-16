@@ -8,7 +8,11 @@ class XMLConfigReader implements IConfigReader {
      */
     public function getLoggerFile(): array
     {
-        return self::readFile(self::APP_PATH . '/config/logger.xml');
+        if ($data = self::readFile(self::APP_PATH . '/config/logger.xml')) {
+            return $data;
+        }
+
+        return self::readFile(self::FRAMEWORK_PATH . '/config/logger.xml');
     }
 
     /**
@@ -53,7 +57,10 @@ class XMLConfigReader implements IConfigReader {
 
     private static function readFile(string $filename): array
     {
-        $xml = simplexml_load_file($filename);
+        if (!$xml = simplexml_load_file($filename)) {
+            return [];
+        }
+        
         return json_decode(json_encode($xml), true);
     }
 }
