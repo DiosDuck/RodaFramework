@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<classes>
+    <class name="Framework\Router\IRouter">
+        <base>Framework\Router\Router</base>
+        <args>
+            <arg>Framework\Logger\ILogService</arg>
+            <arg>Framework\Session\ISession</arg>
+            <arg>Framework\Authorization\IAuthorizationService</arg>
+        </args>
+    </class>
+    <class name="Framework\Logger\ILogService">
+        <base>Framework\Logger\MultipleLogService</base>
+        <args>
+            <arg>Framework\ConfigReader\IConfigReader</arg>
+        </args>
+    </class>
+    <class name="Framework\Session\ISession">
+        <base>Framework\Session\Session</base>
+        <args>
+            <arg>Framework\ConfigReader\IConfigReader</arg>
+        </args>
+    </class>
+    <class name="Framework\ConfigReader\IConfigReader">
+        <base>Framework\ConfigReader\XMLConfigReader</base>
+    </class>
+    <class name="Framework\Authorization\IAuthorizationService">
+        <base>Framework\Authorization\AuthorizationService</base>
+        <args>
+            <arg>Framework\Session\ISession</arg>
+        </args>
+    </class>
+    <class name="Framework\Database\AbstractDatabase">
+        <base>Framework\Database\MySQLDatabase</base>
+        <args>
+            <arg>Framework\ConfigReader\IConfigReader</arg>
+        </args>
+    </class>
+    <class name="Framework\Controllers\AbstractErrorController">
+        <base>Framework\Controllers\ErrorController</base>
+    </class>
+    <class name="Framework\ConfigReader\XMLConfigReader"/>
+</classes>

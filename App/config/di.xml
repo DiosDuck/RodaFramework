@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<classes>
+    <class name="Framework\Logger\ILogService">
+        <base>Framework\Logger\LogService</base>
+        <method>getLogger</method>
+        <args>
+            <arg>Framework\ConfigReader\IConfigReader</arg>
+        </args>
+    </class>
+    <class name="App\Controllers\ApiController"/>
+    <class name="App\Controllers\HomeController"/>
+    <class name="App\Controllers\AdminController"/>
+    <class name="App\Controllers\AdminApiController">
+        <args>
+            <arg>Framework\Session\ISession</arg>
+        </args>
+    </class>
+</classes>

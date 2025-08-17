@@ -2,6 +2,8 @@
 
 namespace Framework\ConfigReader;
 
+use SimpleXMLElement;
+
 class XMLConfigReader implements IConfigReader {
     /**
      * Get array of app data for logger config
@@ -32,27 +34,27 @@ class XMLConfigReader implements IConfigReader {
     }
 
     /**
-     * Check if app dependency injection config file exists
+     * Get SimpleXMLElement of app data for dependency injection config
      */
-    public static function hasDIAppFile(): bool
+    public static function getDIAppFile(): ?SimpleXMLElement
     {
-        return file_exists(self::APP_PATH . '/config/di.xml');
+        if ($xml = simplexml_load_file(self::APP_PATH . '/config/di.xml')) {
+            return $xml;
+        }
+
+        return null;
     }
 
     /**
-     * Get array of app data for dependency injection config
+     * Get SimpleXMLElement of framework data for dependency injection config
      */
-    public static function getDIAppFile(): array
+    public static function getDIFrameworkFile(): ?SimpleXMLElement
     {
-        return self::readFile(self::APP_PATH . '/config/di.xml');
-    }
+        if ($xml = simplexml_load_file(self::FRAMEWORK_PATH . '/config/di.xml')) {
+            return $xml;
+        }
 
-    /**
-     * Get array of framework data for dependency injection config
-     */
-    public static function getDIFrameworkFile(): array
-    {
-        return self::readFile(self::FRAMEWORK_PATH . '/config/di.xml');
+        return null;
     }
 
     private static function readFile(string $filename): array
@@ -60,7 +62,7 @@ class XMLConfigReader implements IConfigReader {
         if (!$xml = simplexml_load_file($filename)) {
             return [];
         }
-        
+
         return json_decode(json_encode($xml), true);
     }
 }

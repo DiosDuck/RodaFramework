@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <logger>
     <file>php://stdout</file>
-    <file>../log.txt</file>
 </logger>

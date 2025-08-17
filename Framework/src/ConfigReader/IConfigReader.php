@@ -20,19 +20,4 @@ interface IConfigReader {
      * Get array of app data for session config
      */
     public function getSessionFile(): array;
-
-    /**
-     * Check if app dependency injection config file exists
-     */
-    public static function hasDIAppFile(): bool;
-
-    /**
-     * Get array of app data for dependency injection config
-     */
-    public static function getDIAppFile(): array;
-
-    /**
-     * Get array of framework data for dependency injection config
-     */
-    public static function getDIFrameworkFile(): array;
 }

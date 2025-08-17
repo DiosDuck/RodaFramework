@@ -33,20 +33,6 @@ class Container {
         return self::get($className);
     }
 
-    /** 
-     * Get object from container (with type hint of the class too)
-     * 
-     * @deprecated 1.1.0 No longer used because of name confusion, use Container::getObject instead
-     * 
-     * @template T
-     * @param class-string<T> $className the instance name and type, mapped in dependency injection file
-     * @return T the instance built
-     */
-    public static function getClass(string $className): mixed
-    {
-        return self::get($className);
-    }
-
     private static function initialize(): void
     {
         if (isset(self::$containerReader)) {
@@ -55,7 +41,8 @@ class Container {
         
         $format = EnvReader::getValue('FORMAT');
         self::$containerReader = match(strtolower($format)) {
-            "php" =>  new PHPContainerReader(),
+            'php' =>  new PHPContainerReader(),
+            'xml' => new XMLContainerReader(),
             default => new PHPContainerReader(),
         };
     }

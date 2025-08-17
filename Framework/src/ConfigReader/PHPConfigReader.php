@@ -33,16 +33,7 @@ class PHPConfigReader implements IConfigReader {
     {
         return self::getFileDataOrDefault(self::APP_PATH . '/config/session.php');
     }
-
-    /**
-     * Check if App/config/di.php exists
-     * @see App/config/di.php
-     */
-    public static function hasDIAppFile(): bool
-    {
-        return file_exists(self::APP_PATH . '/config/di.php');
-    }
-
+    
     /**
      * Get array of data stored in App/config/di.php
      * @see App/config/di.php
